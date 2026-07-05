@@ -16,6 +16,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Invalid characters in input" }, { status: 400 });
     }
 
+    // Strong Password Validation: 
+    // At least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special char
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return NextResponse.json({ 
+        message: "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character." 
+      }, { status: 400 });
+    }
+
     await connectToDatabase();
 
     const existingUser = await User.findOne({ email });
