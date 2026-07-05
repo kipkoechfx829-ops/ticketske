@@ -2,6 +2,7 @@ import { SAMPLE_EVENTS } from "@/data/events";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import CheckoutForm from "@/components/CheckoutForm";
 
 export function generateStaticParams() {
   return SAMPLE_EVENTS.map((event) => ({
@@ -64,35 +65,8 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
             </div>
             
             <div className="event-tickets">
-              <div className="card" style={{ position: "sticky", top: "100px", border: "1px solid rgba(16, 185, 129, 0.4)" }}>
-                <div className="card-content">
-                  <h3 className="mb-6">Select Tickets</h3>
-                  
-                  <div className="flex flex-col gap-4 mb-8">
-                    {event.tiers.map((tier) => (
-                      <label key={tier.id} className="card" style={{ padding: "1rem", cursor: "pointer", border: "1px solid var(--card-border)", transition: "all var(--transition-fast)" }}>
-                        <div className="flex justify-between items-center mb-1">
-                          <div className="flex items-center gap-3">
-                            <input type="radio" name="ticket-tier" value={tier.id} defaultChecked={event.tiers[0].id === tier.id} style={{ accentColor: "var(--accent-color)" }} />
-                            <span style={{ fontWeight: 600, color: "var(--text-primary)" }}>{tier.name}</span>
-                          </div>
-                          <span style={{ fontWeight: 800, color: "var(--accent-color)" }}>
-                            {tier.price === 0 ? "Free" : `KES ${tier.price.toLocaleString()}`}
-                          </span>
-                        </div>
-                        {tier.description && (
-                          <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginLeft: "1.75rem" }}>
-                            {tier.description}
-                          </p>
-                        )}
-                      </label>
-                    ))}
-                  </div>
-
-                  <button className="btn btn-primary w-full" style={{ padding: "1rem" }}>
-                    Checkout with M-Pesa
-                  </button>
-                </div>
+              <div style={{ position: "sticky", top: "100px" }}>
+                <CheckoutForm eventId={event.id} tiers={event.tiers} />
               </div>
             </div>
           </div>
