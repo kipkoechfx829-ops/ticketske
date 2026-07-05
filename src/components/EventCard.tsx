@@ -16,10 +16,11 @@ export default function EventCard({ id, title, category, date, price, imageUrl, 
     <Link href={`/event/${id}`} className={`card fade-in-up delay-${delayMs}`}>
       <div className="card-img-wrap">
         <Image src={imageUrl} alt={title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="card-img" />
+        <div className="card-overlay" />
       </div>
       <div className="card-content">
-        <span className="badge">{category}</span>
-        <h3 className="mb-2">{title}</h3>
+        <span className="badge" style={{ alignSelf: 'flex-start' }}>{category}</span>
+        <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>{title}</h3>
         <div className="event-info">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -29,7 +30,10 @@ export default function EventCard({ id, title, category, date, price, imageUrl, 
           </svg>
           <span>{date}</span>
         </div>
-        <div className="event-price">{price}</div>
+        <div className="event-price">
+          {price}
+          <span>Get Tickets &rarr;</span>
+        </div>
       </div>
     </Link>
   );

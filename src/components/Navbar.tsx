@@ -7,10 +7,10 @@ export default function Navbar() {
         <Link href="/" className="nav-brand">
           Tickets<span>KE</span>
         </Link>
-        <nav className="flex items-center gap-4">
-          <Link href="/events" className="btn-outline" style={{ border: 'none' }}>Events</Link>
-          <Link href="/sports" className="btn-outline" style={{ border: 'none' }}>Sports</Link>
-          <Link href="/login" className="btn btn-primary">Sign In</Link>
+        <nav className="flex items-center gap-6 nav-links">
+          <Link href="/events">Browse Events</Link>
+          <Link href="/sports">Sports</Link>
+          <Link href="/login" className="btn btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }}>Sign In</Link>
         </nav>
       </div>
     </header>
