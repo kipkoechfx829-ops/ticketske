@@ -16,6 +16,29 @@ export default function EventCard({ id, title, category, date, tiers, imageUrl, 
       <div className="card-img-wrap">
         <Image src={imageUrl} alt={title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="card-img" />
         <div className="card-overlay" />
+        
+        {/* Social Proof Tag */}
+        {Math.random() > 0.5 && (
+          <div style={{
+            position: "absolute",
+            top: "1rem",
+            right: "1rem",
+            backgroundColor: "var(--accent-color)",
+            color: "white",
+            padding: "0.25rem 0.75rem",
+            borderRadius: "9999px",
+            fontSize: "0.75rem",
+            fontWeight: 800,
+            zIndex: 10,
+            boxShadow: "0 4px 12px rgba(16,185,129,0.4)",
+            display: "flex",
+            alignItems: "center",
+            gap: "4px"
+          }}>
+            <span style={{ display: "inline-block", width: "6px", height: "6px", backgroundColor: "white", borderRadius: "50%", animation: "pulse 2s infinite" }}></span>
+            Selling Fast
+          </div>
+        )}
       </div>
       <div className="card-content">
         <span className="badge" style={{ alignSelf: 'flex-start' }}>{category}</span>

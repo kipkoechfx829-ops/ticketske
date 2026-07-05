@@ -239,6 +239,12 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+@keyframes pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 .glass-nav {
   position: fixed;
   top: 0;

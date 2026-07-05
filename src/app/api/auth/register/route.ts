@@ -11,6 +11,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
     }
 
+    // Basic NoSQL injection prevention
+    if (email.includes('$') || password.includes('$')) {
+      return NextResponse.json({ message: "Invalid characters in input" }, { status: 400 });
+    }
+
     await connectToDatabase();
 
     const existingUser = await User.findOne({ email });

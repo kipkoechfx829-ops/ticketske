@@ -13,11 +13,32 @@ function getBasicAuthToken() {
   return Buffer.from(credentials).toString("base64");
 }
 
+// Simple in-memory rate limiter: Map of userId -> { count, resetTime }
+const rateLimit = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_MAX = 5; // 5 attempts
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
+
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json({ message: "Unauthorized - please log in" }, { status: 401 });
+    }
+
+    const userId = (session.user as any).id;
+    const now = Date.now();
+    const userRate = rateLimit.get(userId);
+
+    if (userRate && now < userRate.resetTime) {
+      if (userRate.count >= RATE_LIMIT_MAX) {
+        return NextResponse.json(
+          { message: "Too many payment attempts. Please wait 15 minutes." }, 
+          { status: 429 }
+        );
+      }
+      userRate.count += 1;
+    } else {
+      rateLimit.set(userId, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
     }
 
     const { phoneNumber, eventId, tierId, tierName, amount, quantity } = await req.json();

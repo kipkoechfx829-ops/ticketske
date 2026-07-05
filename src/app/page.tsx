@@ -59,6 +59,42 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* Testimonials / Social Proof Section */}
+        <section className="section" style={{ backgroundColor: "rgba(255,255,255,0.02)", borderTop: "1px solid var(--card-border)", borderBottom: "1px solid var(--card-border)" }}>
+          <div className="container">
+            <div className="text-center mb-12">
+              <h2>Trusted by Thousands of Kenyans</h2>
+              <p className="text-secondary" style={{ fontSize: "1.1rem" }}>See what our event goers are saying about the TicketsKE experience.</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { name: "Sarah M.", role: "Concert Fan", text: "Buying tickets used to be a hassle. With TicketsKE and M-Pesa, it took me literally 30 seconds to get my VIP pass. Incredible UX!" },
+                { name: "David O.", role: "Event Organizer", text: "The admin dashboard is phenomenal. I can track my total sales in real-time and the M-Pesa integration is completely seamless." },
+                { name: "Wanjiku N.", role: "Sports Enthusiast", text: "Love the instant QR code delivery. Just walked up to the stadium, scanned my phone, and I was in. Highly recommended!" }
+              ].map((testimonial, i) => (
+                <div key={i} className="card p-6" style={{ padding: "2rem" }}>
+                  <div className="flex gap-1 mb-4" style={{ color: "#fbbf24" }}>
+                    ★★★★★
+                  </div>
+                  <p className="text-secondary mb-6" style={{ fontStyle: "italic", lineHeight: 1.7 }}>
+                    "{testimonial.text}"
+                  </p>
+                  <div className="flex items-center gap-3 mt-auto pt-4" style={{ borderTop: "1px solid var(--card-border)" }}>
+                    <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "var(--accent-color)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bold", color: "#fff" }}>
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p style={{ fontWeight: 600, fontSize: "0.95rem", margin: 0 }}>{testimonial.name}</p>
+                      <p className="text-secondary" style={{ fontSize: "0.8rem", margin: 0 }}>{testimonial.role}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );

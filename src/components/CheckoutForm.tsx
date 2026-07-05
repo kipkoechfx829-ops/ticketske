@@ -225,6 +225,23 @@ export default function CheckoutForm({ eventId, tiers }: CheckoutProps) {
             You need to <a href="/login" style={{ color: "var(--accent-color)" }}>sign in</a> to purchase tickets.
           </p>
         )}
+
+        {/* Trust Badges */}
+        <div className="mt-6 pt-4 flex flex-col items-center justify-center gap-2" style={{ borderTop: "1px dashed var(--card-border)" }}>
+          <div className="flex items-center gap-4 text-secondary" style={{ fontSize: "0.8rem" }}>
+            <span className="flex items-center gap-1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              SSL Secured
+            </span>
+            <span className="flex items-center gap-1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              Verified Organizer
+            </span>
+          </div>
+          <p style={{ fontSize: "0.75rem", color: "var(--accent-color)", fontWeight: 600 }}>
+            Powered securely by M-Pesa & PayHero
+          </p>
+        </div>
       </div>
     </div>
   );
