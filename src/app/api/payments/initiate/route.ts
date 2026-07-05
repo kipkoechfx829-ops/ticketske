@@ -4,8 +4,8 @@ import { authOptions } from "@/lib/auth";
 import connectToDatabase from "@/lib/mongodb";
 import Order from "@/models/Order";
 
-const PAYHERO_USERNAME = process.env.PAYHERO_USERNAME!;
-const PAYHERO_PASSWORD = process.env.PAYHERO_PASSWORD!;
+const PAYHERO_USERNAME = process.env.PAYHERO_API_USER!;
+const PAYHERO_PASSWORD = process.env.PAYHERO_API_PASS!;
 const PAYHERO_CHANNEL_ID = process.env.PAYHERO_CHANNEL_ID!;
 
 function getBasicAuthToken() {
