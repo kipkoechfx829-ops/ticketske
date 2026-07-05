@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/mongodb";
 import Order from "@/models/Order";
 import User from "@/models/User";
-import { Resend } from "resend";
+import sgMail from "@sendgrid/mail";
 
 // This endpoint receives payment status from PayHero after the user completes payment
 export async function POST(req: Request) {
@@ -28,17 +28,17 @@ export async function POST(req: Request) {
       );
 
       // Send confirmation email if we have the order and API key
-      if (order && process.env.RESEND_API_KEY) {
+      if (order && process.env.SENDGRID_API_KEY) {
         try {
-          const resend = new Resend(process.env.RESEND_API_KEY);
+          sgMail.setApiKey(process.env.SENDGRID_API_KEY);
           const user = await User.findById(order.userId);
           if (user?.email) {
             const ticketId = order._id.toString();
             const shortId = ticketId.slice(-8).toUpperCase();
             const dashboardUrl = `${process.env.NEXTAUTH_URL || "https://ticketske-glzl.onrender.com"}/dashboard`;
 
-            await resend.emails.send({
-              from: "TicketsKE <tickets@resend.dev>",
+            await sgMail.send({
+              from: { name: "TicketsKE", email: process.env.SENDGRID_FROM_EMAIL || "noreply@ticketske.com" },
               to: user.email,
               subject: `Your Ticket is Confirmed! 🎟️ [${shortId}]`,
               html: `
@@ -47,13 +47,11 @@ export async function POST(req: Request) {
                     <h1 style="margin: 0; font-size: 2rem; color: #fff;">🎟️ You're In!</h1>
                     <p style="margin: 8px 0 0; color: rgba(255,255,255,0.85);">Your ticket is confirmed</p>
                   </div>
-                  
                   <div style="padding: 40px;">
                     <p style="color: #a1a1aa; margin-bottom: 8px;">Hi <strong style="color: #fff">${user.name}</strong>,</p>
                     <p style="color: #a1a1aa; line-height: 1.6;">
                       Great news! Your M-Pesa payment was successful and your ticket has been confirmed. Show the QR code in your dashboard at the gate.
                     </p>
-                    
                     <div style="background: #111; border: 1px solid #222; border-radius: 12px; padding: 24px; margin: 24px 0;">
                       <div style="margin-bottom: 12px;">
                         <p style="color: #a1a1aa; font-size: 12px; margin: 0 0 4px;">TICKET ID</p>
@@ -72,13 +70,11 @@ export async function POST(req: Request) {
                         <p style="font-family: monospace; margin: 0;">${receipt_number}</p>
                       </div>` : ""}
                     </div>
-                    
                     <div style="text-align: center; margin-top: 32px;">
                       <a href="${dashboardUrl}" style="background: #10b981; color: #fff; padding: 14px 32px; border-radius: 9999px; text-decoration: none; font-weight: 700; display: inline-block;">
                         View My QR Ticket
                       </a>
                     </div>
-                    
                     <p style="color: #555; font-size: 12px; margin-top: 32px; text-align: center;">
                       TicketsKE — Secure Kenyan Event Tickets powered by M-Pesa
                     </p>
