@@ -4,8 +4,6 @@ import Order from "@/models/Order";
 import User from "@/models/User";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // This endpoint receives payment status from PayHero after the user completes payment
 export async function POST(req: Request) {
   try {
@@ -32,6 +30,7 @@ export async function POST(req: Request) {
       // Send confirmation email if we have the order and API key
       if (order && process.env.RESEND_API_KEY) {
         try {
+          const resend = new Resend(process.env.RESEND_API_KEY);
           const user = await User.findById(order.userId);
           if (user?.email) {
             const ticketId = order._id.toString();
