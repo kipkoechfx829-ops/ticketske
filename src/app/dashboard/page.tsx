@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import connectToDatabase from "@/lib/mongodb";
 import Order from "@/models/Order";
 import Event from "@/models/Event";
+import TicketCard from "@/components/TicketCard";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -32,27 +33,7 @@ export default async function DashboardPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {orders.map((order: any) => (
-              <div key={order._id.toString()} className="card flex" style={{ flexDirection: "row", padding: "0" }}>
-                <div style={{ width: "120px", backgroundColor: "var(--bg-secondary)", display: "flex", alignItems: "center", justifyContent: "center", borderRight: "2px dashed var(--card-border)" }}>
-                  <div style={{ transform: "rotate(-90deg)", fontWeight: 800, letterSpacing: "4px", color: "var(--text-secondary)" }}>
-                    ADMIT ONE
-                  </div>
-                </div>
-                <div style={{ padding: "1.5rem", flex: 1 }}>
-                  <span className="badge">{order.status}</span>
-                  <h3 style={{ fontSize: "1.2rem", margin: "0.5rem 0" }}>{order.eventId?.title || "Event Unavailable"}</h3>
-                  <p className="text-secondary" style={{ fontSize: "0.9rem", marginBottom: "0.5rem" }}>
-                    {order.eventId?.date} • {order.eventId?.location}
-                  </p>
-                  <div className="flex justify-between items-end mt-4">
-                    <div>
-                      <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>TICKET ID</p>
-                      <p style={{ fontFamily: "monospace", fontSize: "0.9rem" }}>{order._id.toString().slice(-8).toUpperCase()}</p>
-                    </div>
-                    <button className="btn btn-primary" style={{ padding: "0.4rem 1rem", fontSize: "0.85rem" }}>View QR</button>
-                  </div>
-                </div>
-              </div>
+              <TicketCard key={order._id.toString()} order={JSON.parse(JSON.stringify(order))} />
             ))}
           </div>
         )}
