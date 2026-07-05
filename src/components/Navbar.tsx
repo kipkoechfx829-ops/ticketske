@@ -1,9 +1,10 @@
-import Link from 'next/link';
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+"use client";
 
-export default async function Navbar() {
-  const session = await getServerSession(authOptions);
+import { useSession, signOut } from "next-auth/react";
+import Link from "next/link";
+
+export default function Navbar() {
+  const { data: session, status } = useSession();
 
   return (
     <header className="glass-nav">
@@ -12,18 +13,30 @@ export default async function Navbar() {
           Tickets<span>KE</span>
         </Link>
         <nav className="flex items-center gap-6 nav-links">
-          <Link href="/events">Browse Events</Link>
-          <Link href="/sports">Sports</Link>
-          {session ? (
+          <Link href="/">Browse Events</Link>
+          {status === "loading" ? null : session ? (
             <>
-              {(session.user as any).role === "ADMIN" ? (
-                <Link href="/admin" className="btn btn-outline" style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }}>Admin</Link>
+              {(session.user as any)?.role === "ADMIN" ? (
+                <Link href="/admin" className="btn btn-outline" style={{ padding: "0.6rem 1.5rem", fontSize: "0.9rem" }}>
+                  Admin
+                </Link>
               ) : (
-                <Link href="/dashboard" className="btn btn-outline" style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }}>Dashboard</Link>
+                <Link href="/dashboard" className="btn btn-outline" style={{ padding: "0.6rem 1.5rem", fontSize: "0.9rem" }}>
+                  My Tickets
+                </Link>
               )}
+              <button
+                className="btn btn-primary"
+                style={{ padding: "0.6rem 1.5rem", fontSize: "0.9rem" }}
+                onClick={() => signOut({ callbackUrl: "/" })}
+              >
+                Sign Out
+              </button>
             </>
           ) : (
-            <Link href="/login" className="btn btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.9rem' }}>Sign In</Link>
+            <Link href="/login" className="btn btn-primary" style={{ padding: "0.6rem 1.5rem", fontSize: "0.9rem" }}>
+              Sign In
+            </Link>
           )}
         </nav>
       </div>
