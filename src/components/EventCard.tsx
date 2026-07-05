@@ -1,17 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Event } from '@/data/events';
 
-interface EventCardProps {
-  id: string;
-  title: string;
-  category: string;
-  date: string;
-  price: string;
-  imageUrl: string;
+interface EventCardProps extends Event {
   delayMs?: number;
 }
 
-export default function EventCard({ id, title, category, date, price, imageUrl, delayMs = 0 }: EventCardProps) {
+export default function EventCard({ id, title, category, date, tiers, imageUrl, delayMs = 0 }: EventCardProps) {
+  // Find the lowest price
+  const lowestPrice = Math.min(...tiers.map(t => t.price));
+  const priceDisplay = lowestPrice === 0 ? "Free" : `From KES ${lowestPrice.toLocaleString()}`;
+
   return (
     <Link href={`/event/${id}`} className={`card fade-in-up delay-${delayMs}`}>
       <div className="card-img-wrap">
@@ -31,7 +30,7 @@ export default function EventCard({ id, title, category, date, price, imageUrl, 
           <span>{date}</span>
         </div>
         <div className="event-price">
-          {price}
+          {priceDisplay}
           <span>Get Tickets &rarr;</span>
         </div>
       </div>

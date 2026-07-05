@@ -97,6 +97,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (min-width: 1024px) {
   .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .event-layout { grid-template-columns: 2fr 1fr !important; }
 }
 
 /* Utility classes */

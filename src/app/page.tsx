@@ -1,62 +1,6 @@
 import Navbar from "@/components/Navbar";
 import EventCard from "@/components/EventCard";
-
-const SAMPLE_EVENTS = [
-  {
-    id: "1",
-    title: "Nairobi Tech Week 2026",
-    category: "Conference",
-    date: "Aug 12 - 14, 2026",
-    price: "KES 5,000",
-    imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800",
-    delayMs: 100
-  },
-  {
-    id: "2",
-    title: "Kenya Rugby Sevens",
-    category: "Sports",
-    date: "Sep 5, 2026",
-    price: "KES 2,000",
-    imageUrl: "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&q=80&w=800",
-    delayMs: 200
-  },
-  {
-    id: "3",
-    title: "Sauti Sol - The Final Tour",
-    category: "Concert",
-    date: "Oct 20, 2026",
-    price: "KES 10,000",
-    imageUrl: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&q=80&w=800",
-    delayMs: 300
-  },
-  {
-    id: "4",
-    title: "Safaricom Marathon",
-    category: "Sports",
-    date: "Nov 12, 2026",
-    price: "KES 3,000",
-    imageUrl: "https://images.unsplash.com/photo-1552674605-15c1e3dadec1?auto=format&fit=crop&q=80&w=800",
-    delayMs: 100
-  },
-  {
-    id: "5",
-    title: "Afrobeat Festival KE",
-    category: "Festival",
-    date: "Dec 31, 2026",
-    price: "KES 8,500",
-    imageUrl: "https://images.unsplash.com/photo-1470229722913-7c092bbbc794?auto=format&fit=crop&q=80&w=800",
-    delayMs: 200
-  },
-  {
-    id: "6",
-    title: "Startup Pitch Night",
-    category: "Networking",
-    date: "Jul 28, 2026",
-    price: "Free",
-    imageUrl: "https://images.unsplash.com/photo-1559223607-a43c990c692c?auto=format&fit=crop&q=80&w=800",
-    delayMs: 300
-  }
-];
+import { SAMPLE_EVENTS } from "@/data/events";
 
 export default function Home() {
   return (
@@ -94,8 +38,8 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {SAMPLE_EVENTS.map(event => (
-              <EventCard key={event.id} {...event} />
+            {SAMPLE_EVENTS.map((event, index) => (
+              <EventCard key={event.id} {...event} delayMs={(index % 3 + 1) * 100} />
             ))}
           </div>
         </section>
